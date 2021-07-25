@@ -78,7 +78,7 @@ class Game extends React.Component {
 ReactDOM.render(<Game />, document.getElementById('root'));
 
 /*
-        Other Notes
+                                    OTHER NOTES
 Babel is an open-source JavaScript transcompiler used to convert ECMAScript 2015+
 code to a backwards compatible version JS that can be run by older JS engines.
 Babel compiles JSX down to React.createElement() calls.
