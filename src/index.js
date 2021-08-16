@@ -1,3 +1,4 @@
+// Tutorial Link: https://reactjs.org/tutorial/tutorial.html
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -11,24 +12,84 @@ React will efficiently update and re-render our components.
 /* DOM stands for Document Object Model.  It is the santard for manipulating and accessing
 HTML and XML documents.  DOM Elements include head, tittle, body, and other tags. */ 
 
-class Square extends React.Component {
-    // The render method returns a description of what you want to see on the screen.
-    render() {
-        return (
-            <button className="square" onClick={() => alert("Button pressed")}>
-                {this.props.value}
-            </button>
-        );
-    }
+// Function Component - Displays value when button clicked
+// props are (onClick & value)
+function Square(props) {
+    return (
+      <button className="square" onClick={props.onClick}>
+        {props.value}
+      </button>
+    );
 }
 
+// COMPONENT 1
+//class Square extends React.Component {
+    /*
+    In JavaScript classes, you need to always call super when defining the constructor of a subclass. 
+    All React component classes that have a constructor should start with a super(props) call.
+    */
+
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { 
+    //         value:null,
+    //     }
+    // }
+
+    /*
+    As a next step, we want the Square component to “remember” that it got clicked, 
+    and fill it with an “X” mark. To “remember” things, components use state.
+    */
+    // The render method returns a description of what you want to see on the screen.
+//     render() {
+//         return (
+//             // Writting onClick={console.log("Clicked")} would fire evertime component re-renders
+//             <button 
+//                 className="square" 
+//                 onClick={() => this.props.onClick()}
+//             >
+//                 {this.props.value}
+//             </button>
+//         );
+//     }
+// }
+
+// COMPONENT 2
 class Board extends React.Component {
-    renderSquare(i) {
-        return <Square value={i}/>;
+
+    // 1
+    // Creates Board states (Array & next) to set up game
+    constructor(props){
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null),
+            xIsNext:true,
+        };
     }
 
+    // 4
+    handleClick(i){
+        const squares = this.state.squares.slice();     // slice creates new copy of array
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+            squares:squares,
+            xIsNext:!this.state.xIsNext,
+        });
+    }
+    
+    // 3
+    renderSquare(i) {
+        return (
+        <Square 
+            value={this.state.squares[i]}
+            onClick={() => this.handleClick(i)}
+        />); // value is a prop
+    }
+
+    // 2
+    // Sets up board layout
     render() {
-        const status = 'Next player: X';
+        const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
         return (
             // The language below is not HTML, it is JSX (A syntax extension to JavaScript.)
@@ -57,6 +118,7 @@ class Board extends React.Component {
         }
 }
 
+// COMPONENT 3
 class Game extends React.Component {
     render() {
         return (
