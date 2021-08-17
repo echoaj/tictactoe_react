@@ -1,4 +1,6 @@
 // Tutorial Link: https://reactjs.org/tutorial/tutorial.html
+//   npm start
+//   To run react game
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
